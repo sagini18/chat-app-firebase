@@ -1,7 +1,11 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
-import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  updateProfile,
+  sendEmailVerification,
+} from "firebase/auth";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { doc, setDoc } from "firebase/firestore";
 import { auth, db, storage } from "../firebase";
@@ -34,8 +38,14 @@ export const Register = () => {
             });
           });
           await setDoc(doc(db, "userChats", userCredential.user.uid), {});
-          toast.success("Registered successfully");
-          navigate("/home");
+          sendEmailVerification(auth.currentUser)
+            .then(() => {
+              toast.success("Email Sent for Verification!");
+              navigate("/home");
+            })
+            .catch((error) => {
+              toast.error(error.message);
+            });
           if (error) {
             toast.error(error.message);
           }

@@ -1,14 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import {
+  signInWithEmailAndPassword,
+  sendPasswordResetEmail,
+} from "firebase/auth";
 import { auth } from "../firebase";
 
 const Login = () => {
+  const [email, setEmail] = useState("");
   const navigate = useNavigate();
+
   const handleSignIn = (e) => {
     e.preventDefault();
-    const email = e.target[0].value;
     const password = e.target[1].value;
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
@@ -18,6 +22,20 @@ const Login = () => {
         toast.error(error.message);
       });
   };
+  const handleForget = () => {
+    if (email !== "") {
+      sendPasswordResetEmail(auth, email)
+        .then(() => {
+          toast.success("Email Sent!");
+          navigate("/");
+        })
+        .catch((error) => {
+          toast.error(error.message);
+        });
+    } else {
+      toast.error("Enter your email!");
+    }
+  };
   return (
     <div className="form-container">
       <Toaster toastOptions={{ duration: 4000 }} />
@@ -25,10 +43,17 @@ const Login = () => {
         <span className="logo">Saju Chat</span>
         <span className="title">Login</span>
         <form onSubmit={handleSignIn}>
-          <input type="email" placeholder="Email" />
+          <input
+            type="email"
+            placeholder="Email"
+            onChange={(e) => setEmail(e.target.value)}
+          />
           <input type="password" placeholder="Password" />
           <button>Sign in</button>
         </form>
+        <p className="forget-password" onClick={handleForget}>
+          forget password?
+        </p>
         <p>
           You don't have an account? <Link to="/register">Register</Link>{" "}
         </p>

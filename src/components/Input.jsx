@@ -11,7 +11,6 @@ import {
 import { ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
 import { db, storage } from "../firebase";
 import { v4 as uuid } from "uuid";
-import toast, { Toaster } from "react-hot-toast";
 
 export const Input = () => {
   const [text, setText] = useState("");
@@ -35,10 +34,6 @@ export const Input = () => {
             }),
           });
         });
-
-        if (error) {
-          toast.error(error.message);
-        }
       });
     } else {
       await updateDoc(doc(db, "chats", data?.chatId), {
@@ -67,7 +62,6 @@ export const Input = () => {
   };
   return (
     <div className="input">
-      <Toaster toastOptions={{ duration: 4000 }} />
       <input
         type="text"
         placeholder="Type a message"

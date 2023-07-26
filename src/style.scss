@@ -40,6 +40,16 @@ body{
             color:#5d5b8d;
             font-size: 16px;
         }
+        .forget-password{
+          margin: 0px;
+          margin-top: 4px;
+          color: #5d5b8d;
+          text-decoration: underline;
+          cursor: pointer;
+        }
+        p{
+            margin: 10px;
+        }
         form{
             display: flex;
             flex-direction: column;
@@ -220,7 +230,8 @@ body{
                 .chat-icons{
                     display: flex;
                     align-items: center;
-                    gap: 10px;
+                    gap: 15px;
+                    margin-right: 20px;
                     i{
                         cursor: pointer;
                     }
@@ -236,7 +247,7 @@ body{
                 color:#ddddf7;
                 margin-bottom: 10px;
                 background-color: #3e3c61;
-                padding: 5px 0px;
+                padding: 5px;
                 border-radius: 5px;
                 width: 27%;
                 margin: auto;
