@@ -13,11 +13,28 @@ const Messages = () => {
     });
     return unSub;
   }, [data?.chatId]);
+  var prevDate = "Tue Jul 25 1777";
+
   return (
     <div className="messages">
-      {messages?.map((message) => (
-        <Message message={message} key={message?.id} />
-      ))}
+      {messages?.map((message) => {
+        var curdate = new Date(null);
+        curdate.setTime(message?.date?.seconds * 1000);
+        var date = curdate.toDateString();
+        var show = false;
+        console.log("prevDate: ", prevDate);
+        console.log("date: ", date);
+        if (prevDate !== date) {
+          show = true;
+          prevDate = date;
+        }
+        return (
+          <>
+            {show && <div className="date">{date}</div>}
+            <Message message={message} key={message?.id} />
+          </>
+        );
+      })}
     </div>
   );
 };

@@ -88,7 +88,14 @@ export const Input = () => {
         <label htmlFor="file">
           <i className="uil uil-image-plus"></i>
         </label> */}
-        <button onClick={handleSend}>Send </button>
+        <button
+          onClick={handleSend}
+          onKeyDown={(e) => {
+            e.code === "Enter" && handleSend();
+          }}
+        >
+          Send
+        </button>
       </div>
     </div>
   );

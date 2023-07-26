@@ -85,7 +85,7 @@ export const Register = () => {
           <button>Sign up</button>
         </form>
         <p>
-          Do you have an account? <Link to="/login">Login</Link>
+          Do you have an account? <Link to="/">Login</Link>
         </p>
       </div>
     </div>

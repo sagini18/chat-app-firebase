@@ -9,7 +9,7 @@ export const Chat = () => {
     <div className="chat">
       <div className="chat-info">
         <span>{data?.user?.displayName}</span>
-        <div className="chat-icons">
+        {/* <div className="chat-icons">
           <i
             className="uil uil-video"
             style={{ color: "#ddddf7", fontSize: "1.3rem" }}
@@ -22,7 +22,7 @@ export const Chat = () => {
             className="uil uil-ellipsis-h"
             style={{ color: "#ddddf7", fontSize: "1.3rem" }}
           ></i>
-        </div>
+        </div> */}
       </div>
       <Messages />
       <Input />
