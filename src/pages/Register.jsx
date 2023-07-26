@@ -14,11 +14,11 @@ export const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [displayName, setDisplayName] = useState("");
+  const [file, setFile] = useState(null);
   const navigate = useNavigate();
 
   const handleRegister = (e) => {
     e.preventDefault();
-    const file = e.target[3].files[0];
     createUserWithEmailAndPassword(auth, email, password)
       .then(async (userCredential) => {
         const storageRef = ref(storage, displayName);
@@ -80,7 +80,12 @@ export const Register = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          <input style={{ display: "none" }} type="file" id="file" />
+          <input
+            style={{ display: "none" }}
+            type="file"
+            id="file"
+            onChange={(e) => setFile(e.target.files[0])}
+          />
           <label htmlFor="file">
             <i
               className="uil uil-image-plus"
@@ -90,7 +95,11 @@ export const Register = () => {
                 cursor: "pointer",
               }}
             ></i>
-            <span>Add an avatar</span>
+            {file === null ? (
+              <span>Add an avatar</span>
+            ) : (
+              <span>{file?.name}</span>
+            )}
           </label>
           <button>Sign up</button>
         </form>

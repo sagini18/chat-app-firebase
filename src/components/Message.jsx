@@ -1,68 +1,68 @@
 import React, { useEffect, useRef } from "react";
 import { useAuth } from "../context/AuthContext";
 import { useChat } from "../context/ChatContext";
-import { ref, getDownloadURL } from "firebase/storage";
-import { storage } from "../firebase";
+// import { ref, getDownloadURL } from "firebase/storage";
+// import { storage } from "../firebase";
 
 export const Message = ({ message }) => {
   const { currentUser } = useAuth();
   const { data } = useChat();
-  const refer = useRef(null);
+  const ref = useRef(null);
   var curdate = new Date(null);
   curdate.setTime(message?.date?.seconds * 1000);
   var time = curdate.toTimeString().substring(0, 5);
 
   useEffect(() => {
-    refer.current.scrollIntoView({ behavior: "smooth" });
+    ref.current.scrollIntoView({ behavior: "smooth" });
   }, [message]);
 
-  const handleDownload = async (message) => {
-    try {
-      const fileURL = message?.image;
-      const fileName =
-        message?.senderId === currentUser?.uid
-          ? currentUser?.displayName
-          : data?.user?.displayName;
-      // const blob = ref(storage, fileURL);
+  // const handleDownload = async (message) => {
+  //   try {
+  //     const fileURL = message?.image;
+  //     const fileName =
+  //       message?.senderId === currentUser?.uid
+  //         ? currentUser?.displayName
+  //         : data?.user?.displayName;
+  //     // const blob = ref(storage, fileURL);
 
-      console.log("fileURL:", fileURL);
-      getDownloadURL(ref(storage, fileURL))
-        .then((url) => {
-          // `url` is the download URL for 'images/stars.jpg'
+  //     console.log("fileURL:", fileURL);
+  //     getDownloadURL(ref(storage, fileURL))
+  //       .then((url) => {
+  //         // `url` is the download URL for 'images/stars.jpg'
 
-          // This can be downloaded directly:
-          const xhr = new XMLHttpRequest();
-          xhr.responseType = "blob";
-          xhr.onload = (event) => {
-            const blob = xhr.response;
-          };
-          xhr.open("GET", url);
-          xhr.send();
+  //         // This can be downloaded directly:
+  //         const xhr = new XMLHttpRequest();
+  //         xhr.responseType = "blob";
+  //         xhr.onload = (event) => {
+  //           const blob = xhr.response;
+  //         };
+  //         xhr.open("GET", url);
+  //         xhr.send();
 
-          // Or inserted into an <img> element
-          const img = document.getElementById("myimg");
-          img.setAttribute("src", url);
-        })
-        .catch((error) => {
-          // Handle any errors
-        });
+  //         // Or inserted into an <img> element
+  //         const img = document.getElementById("myimg");
+  //         img.setAttribute("src", url);
+  //       })
+  //       .catch((error) => {
+  //         // Handle any errors
+  //       });
 
-      // const blob = await fileURL.blob(); //to convert the response into a Blob object.
-      // const url = URL.createObjectURL(blob);
-      // const a = document.createElement("a");
-      // a.href = url;
-      // a.download = fileName;
-      // document.body.appendChild(a);
-      // a.click();
-      // a.remove();
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  //     // const blob = await fileURL.blob(); //to convert the response into a Blob object.
+  //     // const url = URL.createObjectURL(blob);
+  //     // const a = document.createElement("a");
+  //     // a.href = url;
+  //     // a.download = fileName;
+  //     // document.body.appendChild(a);
+  //     // a.click();
+  //     // a.remove();
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   return (
     <div
-      ref={refer}
+      ref={ref}
       className={`message ${message?.senderId === currentUser?.uid && "owner"}`}
     >
       <div className="message-info">
